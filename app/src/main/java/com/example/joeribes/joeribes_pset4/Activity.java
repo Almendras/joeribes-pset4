@@ -9,19 +9,19 @@ import java.io.Serializable;
 public class Activity implements Serializable{
 
     private int _id;
-    private String productname;
+    private String activityName;
     private String description;
     private int finished;
 
 
-    public Activity(String productName, String aDescription) {
-        productname = productName;
+    public Activity(String anActivityName, String aDescription) {
+        activityName = anActivityName;
         description = aDescription;
         finished = 0;
     }
 
     public Activity(String productName, String aDescription, int id, int isFinished) {
-        productname = productName;
+        activityName = productName;
         description = aDescription;
         _id = id;
         finished = isFinished;
@@ -31,8 +31,8 @@ public class Activity implements Serializable{
         this._id = _id;
     }
 
-    public void set_productname(String newProductName) {
-        productname = newProductName;
+    public void set_activityName(String newProductName) {
+        activityName = newProductName;
     }
 
     public void set_description(String newDescription) {
@@ -43,8 +43,8 @@ public class Activity implements Serializable{
         return _id;
     }
 
-    public String get_productname() {
-        return productname;
+    public String get_activityName() {
+        return activityName;
     }
 
 

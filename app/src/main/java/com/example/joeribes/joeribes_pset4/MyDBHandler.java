@@ -45,7 +45,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public void create(Activity activity) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_ACTIVITY, activity.get_productname());
+        values.put(COLUMN_ACTIVITY, activity.get_activityName());
         values.put(COLUMN_DESCRIPTION, activity.get_description());
         values.put(COLUMN_FINISHED, activity.get_finished());
         db.insert(TABLE_ACTIVITY, null, values);
@@ -87,7 +87,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
 
     // Delete values from the database which match the id
-    public Activity descriptionToString(int activity_id){
+    public Activity readDescription(int activity_id){
         SQLiteDatabase db = getReadableDatabase();
 
         Activity activity = null;
@@ -115,7 +115,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public int update(Activity activity) {
         SQLiteDatabase db = getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_ACTIVITY, activity.get_productname());
+        values.put(COLUMN_ACTIVITY, activity.get_activityName());
+        values.put(COLUMN_DESCRIPTION, activity.get_description());
         values.put(COLUMN_FINISHED, activity.get_finished());
         return db.update(TABLE_ACTIVITY, values, COLUMN_ID + " = ? ", new String[] { String.valueOf(activity.get_id()) });
 

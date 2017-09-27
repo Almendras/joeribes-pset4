@@ -36,7 +36,7 @@ public class CustomAdapter extends ArrayAdapter<Activity> {
         dbHandler = new MyDBHandler(customContext);
 
         // Initializing values
-        final String activityItem = getItem(position).get_productname();
+        final String activityItem = getItem(position).get_activityName();
         final String descriptionItem = getItem(position).get_description();
         final int idItem = getItem(position).get_id();
         final int isFinished = getItem(position).get_finished();
@@ -62,7 +62,7 @@ public class CustomAdapter extends ArrayAdapter<Activity> {
                 } else {
                     activity.set_Finished(0);
                     dbHandler.update(activity);
-                    Toast.makeText(customContext, "Marked " + activityItem  + "as unfinished", Toast.LENGTH_LONG).show();
+                    Toast.makeText(customContext, "Marked " + activityItem  + " as unfinished", Toast.LENGTH_LONG).show();
                 }
             }
         });

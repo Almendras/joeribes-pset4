@@ -30,6 +30,14 @@ public class DescriptionActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_edit:
+                Intent intent1 = new Intent(getBaseContext(), EditActivity.class);
+                intent1.putExtra("todos", activity);
+                intent1.putExtra("todos_id", activity_id);
+                startActivity(intent1);
+                finish();
+                return true;
+
             case R.id.action_delete:
                 deleteDialog();
                 return true;
@@ -62,7 +70,7 @@ public class DescriptionActivity extends AppCompatActivity {
 
         // Set the activity name and description in the textViews
         activityView.setText(activity);
-        description = dbHandler.descriptionToString(activity_id);
+        description = dbHandler.readDescription(activity_id);
         descriptionView.setText(description.get_description());
 
     }

@@ -16,6 +16,13 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     MyDBHandler dbHandler;
     String activity;
     int activity_id;
@@ -28,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                Intent intent = new Intent(getBaseContext(),AddActivity.class);
+                Intent intent = new Intent(getBaseContext(), AddActivity.class);
                 startActivity(intent);
                 finish();
                 return true;
@@ -77,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                         // Receive the activity and id
-                        activity = activityArray.get(position).get_productname();
+                        activity = activityArray.get(position).get_activityName();
                         activity_id = activityArray.get(position).get_id();
                         activity_finished = activityArray.get(position).get_finished();
 
