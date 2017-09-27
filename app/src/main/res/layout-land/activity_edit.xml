@@ -33,7 +33,7 @@
         android:id="@+id/editButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="addButtonClicked"
+        android:onClick="editButtonClicked"
         android:text="Edit your activity "
         tools:layout_editor_absoluteX="126dp"
         tools:layout_editor_absoluteY="307dp"
