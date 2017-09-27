@@ -7,18 +7,21 @@
     tools:context="com.example.joeribes.joeribes_pset4.DescriptionActivity">
 
     <TextView
-        android:id="@+id/descriptionView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/myView"
-        android:layout_marginStart="94dp"
-        android:layout_marginTop="10dp" />
+        android:id="@+id/activityView"
+        android:layout_width="500dp"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:text="Boodschappen"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
-        android:id="@+id/myView"
-        android:layout_width="wrap_content"
+        android:id="@+id/descriptionView"
+        android:layout_width="500dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/descriptionView" />
+        android:layout_below="@+id/activityView"
+        android:gravity="center"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>

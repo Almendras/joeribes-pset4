@@ -6,19 +6,19 @@ import java.io.Serializable;
  * Created by Joeri Bes on 25-9-2017.
  */
 
-public class Product implements Serializable{
+public class Activity implements Serializable{
 
     private int _id;
     private String productname;
     private String description;
 
 
-    public Product(String productName, String aDescription) {
+    public Activity(String productName, String aDescription) {
         productname = productName;
         description = aDescription;
     }
 
-    public Product(String productName, String aDescription, int id) {
+    public Activity(String productName, String aDescription, int id) {
         productname = productName;
         description = aDescription;
         _id = id;

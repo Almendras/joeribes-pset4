@@ -4,33 +4,39 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText buckysInput;
-    TextView buckysText;
     MyDBHandler dbHandler;
-    String food;
-    int food_id;
-    ListView myListView;
-    ArrayList<Product> productArray;
+    String activity;
+    int activity_id;
+    ListView activityListView;
+    ArrayList<Activity> activityArray;
     Context context;
-    Product product;
 
-
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                Intent intent = new Intent(getBaseContext(),AddActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,59 +46,43 @@ public class MainActivity extends AppCompatActivity {
         context = this;
         dbHandler = new MyDBHandler(this);
 
-        buckysInput = (EditText) findViewById(R.id.buckysInput);
-        buckysText = (TextView) findViewById(R.id.buckysText);
-
         printDatabase();
         showAdapter();
     }
 
-    //Add a product to the database
-    public void addButtonClicked(View view){
-        product = new Product(buckysInput.getText().toString(), "Joeri");
-        dbHandler.create(product);
-        printDatabase();
-    }
-
-    //Delete items
-    public void deleteButtonClicked(View view){
-        String inputText = buckysInput.getText().toString();
-        dbHandler.deleteProduct(inputText);
-        printDatabase();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     //Print the database
     public void printDatabase(){
-        productArray = dbHandler.read();
-        buckysInput.setText("");
+        activityArray = dbHandler.read();
         showAdapter();
     }
 
     public void showAdapter() {
-        ListAdapter myAdapter = new CustomAdapter(this, productArray);
-        myListView = (ListView) findViewById(R.id.myListView);
-        assert myListView != null;
+        ListAdapter myAdapter = new CustomAdapter(this, activityArray);
+        activityListView = (ListView) findViewById(R.id.activityListView);
+        assert activityListView != null;
 
-        myListView.setAdapter(myAdapter);
+        activityListView.setAdapter(myAdapter);
 
-        myListView.setOnItemClickListener(
+        activityListView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener(){
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        //food = String.valueOf(parent.getItemAtPosition(position));
-                        food = productArray.get(position).get_productname();
-                        food_id = productArray.get(position).get_id();
 
-                        Toast.makeText(MainActivity.this, food, Toast.LENGTH_LONG).show();
+                        // Receive the activity and id
+                        activity = activityArray.get(position).get_productname();
+                        activity_id = activityArray.get(position).get_id();
 
                         // Launching new Activity
                         Intent i = new Intent(getApplicationContext(), DescriptionActivity.class);
-                        i.putExtra("todo", food);
-                        i.putExtra("todo_id", food_id);
+                        i.putExtra("todo", activity);
+                        i.putExtra("todo_id", activity_id);
                         startActivity(i);
-
-
-
                     }
                 }
         );

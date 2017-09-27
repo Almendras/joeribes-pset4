@@ -10,10 +10,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class CustomAdapter extends ArrayAdapter<Product> {
+public class CustomAdapter extends ArrayAdapter<Activity> {
 
-    public CustomAdapter(Context context, ArrayList<Product> products) {
-        super(context, R.layout.custom_row , products);
+    public CustomAdapter(Context context, ArrayList<Activity> activities) {
+        super(context, R.layout.custom_row , activities);
     }
 
     @Override

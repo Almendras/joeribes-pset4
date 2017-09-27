@@ -6,49 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.example.joeribes.joeribes_pset4.MainActivity">
 
-    <EditText
-        android:id="@+id/buckysInput"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="55dp"
-        android:ems="10"
-        android:inputType="textPersonName" />
-
-    <Button
-        android:id="@+id/addButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/buckysInput"
-        android:layout_below="@+id/buckysInput"
-        android:layout_marginTop="21dp"
-        android:onClick="addButtonClicked"
-        android:text="Add" />
-
-    <Button
-        android:id="@+id/deleteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/buckysInput"
-        android:layout_alignTop="@+id/addButton"
-        android:onClick="deleteButtonClicked"
-        android:text="Delete" />
-
-    <TextView
-        android:id="@+id/buckysText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/addButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="21dp" />
 
     <ListView
-        android:id="@+id/myListView"
+        android:id="@+id/activityListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/buckysText"
-        android:layout_marginTop="25dp" />
+        android:layout_alignParentTop="true" />
 
 </RelativeLayout>
