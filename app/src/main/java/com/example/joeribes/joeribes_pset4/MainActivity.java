@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     MyDBHandler dbHandler;
     String activity;
     int activity_id;
+    int activity_finished;
     ListView activityListView;
     ArrayList<Activity> activityArray;
     Context context;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         showAdapter();
     }
 
+    // Show the listView adapter
     public void showAdapter() {
         ListAdapter myAdapter = new CustomAdapter(this, activityArray);
         activityListView = (ListView) findViewById(R.id.activityListView);
@@ -77,11 +79,13 @@ public class MainActivity extends AppCompatActivity {
                         // Receive the activity and id
                         activity = activityArray.get(position).get_productname();
                         activity_id = activityArray.get(position).get_id();
+                        activity_finished = activityArray.get(position).get_finished();
 
                         // Launching new Activity
                         Intent i = new Intent(getApplicationContext(), DescriptionActivity.class);
                         i.putExtra("todo", activity);
                         i.putExtra("todo_id", activity_id);
+                        i.putExtra("activity_finished", activity_finished);
                         startActivity(i);
                     }
                 }

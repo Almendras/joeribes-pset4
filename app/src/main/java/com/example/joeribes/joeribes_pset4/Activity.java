@@ -11,17 +11,20 @@ public class Activity implements Serializable{
     private int _id;
     private String productname;
     private String description;
+    private int finished;
 
 
     public Activity(String productName, String aDescription) {
         productname = productName;
         description = aDescription;
+        finished = 0;
     }
 
-    public Activity(String productName, String aDescription, int id) {
+    public Activity(String productName, String aDescription, int id, int isFinished) {
         productname = productName;
         description = aDescription;
         _id = id;
+        finished = isFinished;
     }
 
     public void set_id(int _id) {
@@ -31,7 +34,6 @@ public class Activity implements Serializable{
     public void set_productname(String newProductName) {
         productname = newProductName;
     }
-
 
     public void set_description(String newDescription) {
         description = newDescription;
@@ -48,6 +50,14 @@ public class Activity implements Serializable{
 
     public String get_description() {
         return description;
+    }
+
+    public int get_finished() {
+        return finished;
+    }
+
+    public void set_Finished(int finished) {
+        this.finished = finished;
     }
 
 

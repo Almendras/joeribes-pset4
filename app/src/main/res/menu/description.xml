@@ -9,5 +9,13 @@
         android:title=""
         app:showAsAction="always"/>
 
+    <item
+        android:id="@+id/action_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title=""
+        app:showAsAction="always"/>
+
+
+
 
 </menu>

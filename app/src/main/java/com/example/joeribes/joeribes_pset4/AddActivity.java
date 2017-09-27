@@ -15,6 +15,12 @@ public class AddActivity extends AppCompatActivity {
     Context context;
     Activity activity;
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +30,7 @@ public class AddActivity extends AppCompatActivity {
         context = this;
         dbHandler = new MyDBHandler(this);
 
+        // Initializing views
         activityInput = (EditText) findViewById(R.id.activityInput);
         descriptionInput = (EditText) findViewById(R.id.descriptionInput);
 
@@ -31,10 +38,11 @@ public class AddActivity extends AppCompatActivity {
 
     //Add an activity to the database
     public void addButtonClicked(View view){
+        // Create activity with an Activity name and Description
         activity = new Activity(activityInput.getText().toString(), descriptionInput.getText().toString());
         dbHandler.create(activity);
-        // printDatabase();
 
+        // // Launching new Activity
         Intent intent = new Intent(getBaseContext(), MainActivity.class);
         startActivity(intent);
         finish();

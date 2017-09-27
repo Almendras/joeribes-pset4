@@ -10,28 +10,26 @@ import java.util.ArrayList;
 
 public class MyDBHandler extends SQLiteOpenHelper {
 
+    // Initializing values for the database
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "productDB.db";
-    private static final String TABLE_PRODUCTS = "productTable";
+    private static final String DATABASE_NAME = "activityDB.db";
+    private static final String TABLE_ACTIVITY = "activityTable";
     private static final String COLUMN_ID = "_id";
-    private static final String COLUMN_PRODUCTNAME = "productName";
-    private static final String COLUMN_DESCRIPTION = "productDescription";
+    private static final String COLUMN_ACTIVITY = "activityName";
+    private static final String COLUMN_FINISHED = "finished";
+    private static final String COLUMN_DESCRIPTION = "activityDescription";
 
-    //We need to pass database information along to superclas
-    /*
-    public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
-    }
-    */
+
     public MyDBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String query = "CREATE TABLE " + TABLE_PRODUCTS + "(" +
+        String query = "CREATE TABLE " + TABLE_ACTIVITY + "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                COLUMN_PRODUCTNAME + " TEXT NOT NULL, " +
+                COLUMN_ACTIVITY + " TEXT NOT NULL, " +
+                COLUMN_FINISHED + " BOOL NOT NULL, " +
                 COLUMN_DESCRIPTION + " TEXT NOT NULL)";
 
         db.execSQL(query);
@@ -39,7 +37,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACTIVITY);
         onCreate(db);
     }
 
@@ -47,32 +45,35 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public void create(Activity activity) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_PRODUCTNAME, activity.get_productname());
+        values.put(COLUMN_ACTIVITY, activity.get_productname());
         values.put(COLUMN_DESCRIPTION, activity.get_description());
-        db.insert(TABLE_PRODUCTS, null, values);
+        values.put(COLUMN_FINISHED, activity.get_finished());
+        db.insert(TABLE_ACTIVITY, null, values);
         db.close();
     }
 
     //Delete a activity from the database
     public void delete(int activityID) {
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_PRODUCTS + " WHERE " + COLUMN_ID + "=\"" + activityID + "\";");
+        db.execSQL("DELETE FROM " + TABLE_ACTIVITY + " WHERE " + COLUMN_ID + "=\"" + activityID + "\";");
     }
 
+    // Read the values from the database and story them in an ArrayList
     public ArrayList<Activity> read(){
         SQLiteDatabase db = getReadableDatabase();
 
         ArrayList<Activity> activities = new ArrayList<>();
 
-        String query = "SELECT " + COLUMN_ID + ", " + COLUMN_PRODUCTNAME + ", " + COLUMN_DESCRIPTION + " FROM " + TABLE_PRODUCTS;
+        String query = "SELECT " + COLUMN_ID + ", " + COLUMN_ACTIVITY + ", " + COLUMN_DESCRIPTION + ", " + COLUMN_FINISHED + " FROM " + TABLE_ACTIVITY;
         Cursor cursor = db.rawQuery(query, null);
 
         if(cursor.moveToFirst()) {
             do {
-                String productName = cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCTNAME));
+                String productName = cursor.getString(cursor.getColumnIndex(COLUMN_ACTIVITY));
                 String productDescription = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION));
                 int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
-                Activity activity = new Activity(productName, productDescription, id);
+                int finished = cursor.getInt(cursor.getColumnIndex(COLUMN_FINISHED));
+                Activity activity = new Activity(productName, productDescription, id, finished);
                 activities.add(activity);
             }
 
@@ -85,22 +86,22 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     }
 
-
-    public Activity descriptionToString(int food_id){
+    // Delete values from the database which match the id
+    public Activity descriptionToString(int activity_id){
         SQLiteDatabase db = getReadableDatabase();
 
-        ArrayList<Activity> activities = new ArrayList<>();
         Activity activity = null;
 
-        String query = "SELECT " + COLUMN_ID + ", " + COLUMN_PRODUCTNAME + ", " + COLUMN_DESCRIPTION + " FROM " + TABLE_PRODUCTS + " WHERE " + COLUMN_ID + " = " + food_id;
+        String query = "SELECT " + COLUMN_ID + ", " + COLUMN_ACTIVITY + ", " + COLUMN_DESCRIPTION + ", " + COLUMN_FINISHED + " FROM " + TABLE_ACTIVITY + " WHERE " + COLUMN_ID + " = " + activity_id;
         Cursor cursor = db.rawQuery(query, null);
 
         if(cursor.moveToFirst()) {
             do {
-                String productName = cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCTNAME));
+                String productName = cursor.getString(cursor.getColumnIndex(COLUMN_ACTIVITY));
                 String productDescription = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION));
                 int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
-                activity = new Activity(productName, productDescription, id);
+                int finished = cursor.getInt(cursor.getColumnIndex(COLUMN_FINISHED));
+                activity = new Activity(productName, productDescription, id, finished);
             }
 
             while (cursor.moveToNext());
@@ -110,14 +111,14 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return activity;
     }
 
+    // Update the database with new values
     public int update(Activity activity) {
         SQLiteDatabase db = getReadableDatabase();
-
         ContentValues values = new ContentValues();
-        values.put(COLUMN_PRODUCTNAME, activity.get_productname());
-        values.put(COLUMN_DESCRIPTION, activity.get_description());
+        values.put(COLUMN_ACTIVITY, activity.get_productname());
+        values.put(COLUMN_FINISHED, activity.get_finished());
+        return db.update(TABLE_ACTIVITY, values, COLUMN_ID + " = ? ", new String[] { String.valueOf(activity.get_id()) });
 
-        return db.update(TABLE_PRODUCTS, values, COLUMN_ID + " = ? ", new String[] { String.valueOf(activity.get_id())});
     }
 
 
