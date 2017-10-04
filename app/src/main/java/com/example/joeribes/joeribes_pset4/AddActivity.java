@@ -11,9 +11,9 @@ public class AddActivity extends AppCompatActivity {
 
     EditText activityInput;
     EditText descriptionInput;
-    MyDBHandler dbHandler;
+    TodoManager dbHandler;
     Context context;
-    Activity activity;
+    TodoItem todoItem;
 
     @Override
     public void onBackPressed() {
@@ -28,7 +28,8 @@ public class AddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add);
 
         context = this;
-        dbHandler = new MyDBHandler(this);
+        //dbHandler = new TodoManager(this);
+        dbHandler = TodoManager.getsInstance(context);
 
         // Initializing views
         activityInput = (EditText) findViewById(R.id.activityInput);
@@ -36,16 +37,19 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
-    //Add an activity to the database
+    //Add an todoItem to the database
     public void addButtonClicked(View view){
-        // Create activity with an Activity name and Description
-        activity = new Activity(activityInput.getText().toString(), descriptionInput.getText().toString());
-        dbHandler.create(activity);
+        // Create todoItem with an TodoItem name and Description
+        int test = 0;
+        todoItem = new TodoItem(activityInput.getText().toString(), descriptionInput.getText().toString(), test);
+        dbHandler.create(todoItem);
 
-        // // Launching new Activity
+        // // Launching new TodoItem
         Intent intent = new Intent(getBaseContext(), MainActivity.class);
         startActivity(intent);
         finish();
     }
+
+
 
 }

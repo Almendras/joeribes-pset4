@@ -11,15 +11,18 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class CustomAdapter extends ArrayAdapter<TodoItem> {
+/**
+ * Created by Joeri Bes on 4-10-2017.
+ */
+
+public class TodoListsAdapter extends ArrayAdapter<TodoList> {
 
     Context customContext;
     TodoManager dbHandler;
 
-    public CustomAdapter(Context context, ArrayList<TodoItem> activities) {
+    public TodoListsAdapter(Context context, ArrayList<TodoList> activities) {
         super(context, R.layout.custom_row , activities);
         customContext = context;
-
     }
 
     @Override
@@ -72,3 +75,4 @@ public class CustomAdapter extends ArrayAdapter<TodoItem> {
 
 
 }
+

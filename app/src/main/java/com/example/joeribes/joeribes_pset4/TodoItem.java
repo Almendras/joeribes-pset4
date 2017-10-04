@@ -6,33 +6,40 @@ import java.io.Serializable;
  * Created by Joeri Bes on 25-9-2017.
  */
 
-public class Activity implements Serializable{
+public class TodoItem implements Serializable{
 
     private int _id;
-    private String activityName;
+    private String todoName;
     private String description;
     private int finished;
+    private int groupid;
 
-
-    public Activity(String anActivityName, String aDescription) {
-        activityName = anActivityName;
+    public TodoItem(String aTodoName, String aDescription, int groupID) {
+        todoName = aTodoName;
         description = aDescription;
+        groupid = groupID;
         finished = 0;
+
     }
 
-    public Activity(String productName, String aDescription, int id, int isFinished) {
-        activityName = productName;
+    public TodoItem(String productName, String aDescription, int id, int isFinished, int groupID) {
+        todoName = productName;
         description = aDescription;
         _id = id;
         finished = isFinished;
+        groupid = groupID;
     }
 
     public void set_id(int _id) {
         this._id = _id;
     }
 
-    public void set_activityName(String newProductName) {
-        activityName = newProductName;
+    public void set_groupID(int _groupID) {
+        this.groupid = _groupID;
+    }
+
+    public void set_todoName(String newProductName) {
+        todoName = newProductName;
     }
 
     public void set_description(String newDescription) {
@@ -43,8 +50,12 @@ public class Activity implements Serializable{
         return _id;
     }
 
-    public String get_activityName() {
-        return activityName;
+    public int get_groupID() {
+        return groupid;
+    }
+
+    public String get_todoName() {
+        return todoName;
     }
 
 

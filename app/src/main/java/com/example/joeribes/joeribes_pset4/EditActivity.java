@@ -13,9 +13,9 @@ import android.widget.Toast;
 public class EditActivity extends AppCompatActivity {
     EditText activityInput;
     EditText descriptionInput;
-    MyDBHandler dbHandler;
+    TodoManager dbHandler;
     Context context;
-    Activity activity;
+    TodoItem todoItem;
     String activityName;
     int activity_id;
 
@@ -47,7 +47,8 @@ public class EditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit);
 
         context = this;
-        dbHandler = new MyDBHandler(this);
+        //dbHandler = new TodoManager(this);
+        dbHandler = TodoManager.getsInstance(this);
 
         Intent i = getIntent();
         activityName = i.getStringExtra("todos");
@@ -58,8 +59,8 @@ public class EditActivity extends AppCompatActivity {
         descriptionInput = (EditText) findViewById(R.id.descriptionInput);
 
         activityInput.setText(activityName);;
-        activity = dbHandler.readDescription(activity_id);
-        descriptionInput.setText(activity.get_description());
+        todoItem = dbHandler.readDescription(activity_id);
+        descriptionInput.setText(todoItem.get_description());
     }
 
     @Override
@@ -68,20 +69,23 @@ public class EditActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    //Add an activity to the database
+    //Add an todoItem to the database
     public void editButtonClicked(View view){
-        // Edit activity with an Activity name and Description
-        activity.set_activityName(activityInput.getText().toString());
-        activity.set_description(descriptionInput.getText().toString());
+        // Edit todoItem with an TodoItem name and Description
+        todoItem.set_todoName(activityInput.getText().toString());
+        todoItem.set_description(descriptionInput.getText().toString());
 
-        dbHandler.update(activity);
+        dbHandler.update(todoItem);
 
-        Toast.makeText(EditActivity.this, "The activity has been changed" , Toast.LENGTH_LONG).show();
+        Toast.makeText(EditActivity.this, "The todoItem has been changed" , Toast.LENGTH_LONG).show();
 
-        // Launching new Activity
+        // Launching new TodoItem
         Intent intent = new Intent(getBaseContext(), MainActivity.class);
         startActivity(intent);
         finish();
 
     }
+
+
+
 }

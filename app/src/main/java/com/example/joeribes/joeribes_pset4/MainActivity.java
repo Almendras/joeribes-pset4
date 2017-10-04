@@ -23,12 +23,13 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    MyDBHandler dbHandler;
+    TodoManager dbHandler;
     String activity;
     int activity_id;
     int activity_finished;
     ListView activityListView;
-    ArrayList<Activity> activityArray;
+    ArrayList<TodoList> todoListsContainer;
+    ArrayList<TodoItem> todoList;
     Context context;
 
     @Override
@@ -52,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         context = this;
-        dbHandler = new MyDBHandler(this);
+        //dbHandler = new TodoManager(this);
+        dbHandler = TodoManager.getsInstance(this);
 
         printDatabase();
         showAdapter();
@@ -66,13 +68,15 @@ public class MainActivity extends AppCompatActivity {
 
     //Print the database
     public void printDatabase(){
-        activityArray = dbHandler.read();
+        todoListsContainer = dbHandler.read();
+        todoList = todoListsContainer.get(1).getTodoItemList();
+
         showAdapter();
     }
 
     // Show the listView adapter
     public void showAdapter() {
-        ListAdapter myAdapter = new CustomAdapter(this, activityArray);
+        ListAdapter myAdapter = new CustomAdapter(this, todoList);
         activityListView = (ListView) findViewById(R.id.activityListView);
         assert activityListView != null;
 
@@ -83,12 +87,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                        // Receive the activity and id
-                        activity = activityArray.get(position).get_activityName();
-                        activity_id = activityArray.get(position).get_id();
-                        activity_finished = activityArray.get(position).get_finished();
+                        // Receive the todoItem and id
+                        activity = todoList.get(position).get_todoName();
+                        activity_id = todoList.get(position).get_id();
+                        activity_finished = todoList.get(position).get_finished();
 
-                        // Launching new Activity
+                        // Launching new TodoItem
                         Intent i = new Intent(getApplicationContext(), DescriptionActivity.class);
                         i.putExtra("todo", activity);
                         i.putExtra("todo_id", activity_id);
@@ -98,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
     }
+
+
 
 }
 

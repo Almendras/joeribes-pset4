@@ -7,14 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class DescriptionActivity extends AppCompatActivity {
 
-    MyDBHandler dbHandler;
-    Activity description;
+    TodoManager dbHandler;
+    TodoItem description;
     TextView activityView;
     TextView descriptionView;
     String activity;
@@ -61,14 +60,15 @@ public class DescriptionActivity extends AppCompatActivity {
         activityView = (TextView) findViewById(R.id.activityView);
         descriptionView = (TextView) findViewById(R.id.descriptionView);
 
-        dbHandler = new MyDBHandler(this);
+        //dbHandler = new TodoManager(this);
+        dbHandler = TodoManager.getsInstance(this);
 
         // Getting attached intent data
         Intent i = getIntent();
         activity = i.getStringExtra("todo");
         activity_id = i.getIntExtra("todo_id", 0);
 
-        // Set the activity name and description in the textViews
+        // Set the todoItem name and description in the textViews
         activityView.setText(activity);
         description = dbHandler.readDescription(activity_id);
         descriptionView.setText(description.get_description());
@@ -81,10 +81,10 @@ public class DescriptionActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    // Create a delete dialog if the user agrees to delete his/her activity
+    // Create a delete dialog if the user agrees to delete his/her todoItem
     public void deleteDialog() {
         AlertDialog.Builder alert = new AlertDialog.Builder(DescriptionActivity.this);
-        alert.setTitle("Delete activity");
+        alert.setTitle("Delete todoItem");
         alert.setMessage("Are you sure you want to delete " + activity + "?");
         alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
@@ -92,7 +92,7 @@ public class DescriptionActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 //Delete item
                 dbHandler.delete(activity_id);
-                Toast.makeText(DescriptionActivity.this, "Deleted activity " + activity , Toast.LENGTH_LONG).show();
+                Toast.makeText(DescriptionActivity.this, "Deleted todoItem " + activity , Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(intent);
@@ -109,5 +109,6 @@ public class DescriptionActivity extends AppCompatActivity {
 
         alert.show();
     }
+
 
 }

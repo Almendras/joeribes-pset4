@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
         android:gravity="center"
-        android:text="Edit your activity "
+        android:text="Edit your todoItem "
         android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
         tools:layout_editor_absoluteX="66dp"
         tools:layout_editor_absoluteY="16dp" />
@@ -40,7 +40,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="47dp"
         android:onClick="editButtonClicked"
-        android:text="Edit your activity "
+        android:text="Edit your todoItem "
         tools:layout_editor_absoluteX="126dp"
         tools:layout_editor_absoluteY="307dp" />
 
