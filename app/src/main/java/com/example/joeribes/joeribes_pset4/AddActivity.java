@@ -2,6 +2,7 @@ package com.example.joeribes.joeribes_pset4;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -51,6 +52,8 @@ public class AddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
+
+
         context = this;
         //dbHandler = new TodoManager(this);
         dbHandler = TodoManager.getsInstance(context);
@@ -61,6 +64,8 @@ public class AddActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         todoListName = i.getStringExtra("todoListName");
+
+        saveToSharedPrefs(todoListName);
 
     }
 
@@ -75,6 +80,16 @@ public class AddActivity extends AppCompatActivity {
         intent.putExtra("todoListName", todoListName);
         startActivity(intent);
         finish();
+    }
+
+    private void saveToSharedPrefs(String todoListName) {
+        SharedPreferences myPref =getSharedPreferences("APP_SHARED_PREF", this.MODE_PRIVATE);
+        String packageName = this.getPackageName();
+        String className = this.getClass().getSimpleName();
+        SharedPreferences.Editor editor = myPref.edit();
+        editor.putString("last_activity",packageName+"."+className);
+        editor.putString("todoListName", todoListName);
+        editor.apply();
     }
 
 

@@ -92,7 +92,24 @@ public class TodoListActivity extends AppCompatActivity {
 
         showAdapter();
 
+        //saveToSharedPrefs(todoListName);
+
     }
+
+    /*
+    private void saveToSharedPrefs(String todoListName) {
+        SharedPreferences myPref =getSharedPreferences("APP_SHARED_PREF", this.MODE_PRIVATE);
+        String packageName = this.getPackageName();
+        String className = this.getClass().getSimpleName();
+        SharedPreferences.Editor editor = myPref.edit();
+        editor.putString("last_activity",packageName+"."+className);
+        editor.putString("test",todoListName);
+        editor.apply();
+    }
+    */
+
+
+
 
     // Check if todoListsContainer contains a TodoList
     public int containsTodoList(String groupName, ArrayList<TodoList> todoListsContainer) {

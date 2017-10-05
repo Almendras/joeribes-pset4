@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
     TodoManager dbHandler;
     ListView activityListView;
     ArrayList<TodoList> todoListsContainer;
-    Context context;
     String todoListName;
+    String lastActivity;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -50,13 +50,42 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        context = this;
         dbHandler = TodoManager.getsInstance(this);
 
         printDatabase();
         showAdapter();
 
     }
+
+    /*
+    @Override
+    public void onPause(){
+        super.onPause();
+
+        getLastActivity();
+
+        try {
+            Intent fooActivity = new Intent(this,Class.forName(lastActivity));
+            fooActivity.putExtra("todoListName", todoListName);
+            startActivity(fooActivity);
+            finish();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+    */
+
+    /*
+    private void getLastActivity(){
+        SharedPreferences myPref = getSharedPreferences("APP_SHARED_PREF", this.MODE_PRIVATE);
+        lastActivity = myPref.getString("last_activity", "");
+        //todoListName = myPref.getString("todoListName", "");
+    }
+    */
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

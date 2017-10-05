@@ -59,6 +59,9 @@ public class TodoManager extends SQLiteOpenHelper {
                 COLUMN_GROUP + " TEXT NOT NULL, " +
                 COLUMN_DESCRIPTION + " TEXT NOT NULL)";
         db.execSQL(query);
+        db.execSQL("INSERT INTO " + TABLE_TODO + "(" + COLUMN_ID + ", " + COLUMN_TODO+ ", "+ COLUMN_FINISHED +", "+ COLUMN_GROUP + ", "+ COLUMN_DESCRIPTION +") VALUES (0,'AH',0,'Boodschappen','Appels \nPeren \nBananen')");
+        db.execSQL("INSERT INTO " + TABLE_TODO + "(" + COLUMN_ID + ", " + COLUMN_TODO+ ", "+ COLUMN_FINISHED +", "+ COLUMN_GROUP + ", "+ COLUMN_DESCRIPTION +") VALUES (1,'Voetbal',1,'Sporten','Woensdag 9 uur')");
+        db.execSQL("INSERT INTO " + TABLE_TODO + "(" + COLUMN_ID + ", " + COLUMN_TODO+ ", "+ COLUMN_FINISHED +", "+ COLUMN_GROUP + ", "+ COLUMN_DESCRIPTION +") VALUES (2,'Voetbal',0,'Sporten','Zaterdag 1 uur')");
     }
 
     @Override
