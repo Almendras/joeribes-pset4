@@ -2,6 +2,7 @@ package com.example.joeribes.joeribes_pset4;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -24,14 +25,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     TodoManager dbHandler;
-    String activity;
-    int activity_id;
-    int activity_finished;
     ListView activityListView;
     ArrayList<TodoList> todoListsContainer;
-    ArrayList<TodoItem> todoList;
     Context context;
-    String groupName;
+    String todoListName;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -54,11 +51,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         context = this;
-        //dbHandler = new TodoManager(this);
         dbHandler = TodoManager.getsInstance(this);
 
         printDatabase();
         showAdapter();
+
     }
 
     @Override
@@ -69,20 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Print the database
     public void printDatabase(){
-        /*
-        String test = "Joeri";
-        TodoItem todoItem = new TodoItem(test, test, test);
-        dbHandler.create(todoItem, "Joeri");
-        */
-        /*
-        String test = "monkey";
-        TodoItem todoItem = new TodoItem(test, test, test);
-        dbHandler.create(todoItem);
-        */
-
         todoListsContainer = dbHandler.read();
-        //todoList = todoListsContainer.get(0).getTodoItemList();
-
         showAdapter();
     }
 
@@ -99,17 +83,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                        // Receive the todoItem and id
-                        //activity = todoList.get(position).get_todoName();
-                        //activity_id = todoList.get(position).get_id();
-                        //activity_finished = todoList.get(position).get_finished();
-                        groupName = todoListsContainer.get(position).getGroup();
-
-
-
+                        todoListName = todoListsContainer.get(position).get_todoListName();
                         // Launching new TodoItem
                         Intent i = new Intent(getApplicationContext(), TodoListActivity.class);
-                        i.putExtra("groupName", groupName);
+                        i.putExtra("todoListName", todoListName);
                         startActivity(i);
                     }
                 }

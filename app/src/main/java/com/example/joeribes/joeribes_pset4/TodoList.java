@@ -8,24 +8,24 @@ import java.util.ArrayList;
 
 public class TodoList {
 
-    private String group;
+    private String todoList;
     private ArrayList<TodoItem> todoItemList;
 
     public TodoList(String aGroup) {
-        this.group = aGroup;
+        this.todoList = aGroup;
         this.todoItemList = new ArrayList<>();
     }
 
-    public void setGroup(String aGroup) {
-        this.group = aGroup;
+    public void set_todoList(String aGroup) {
+        this.todoList = aGroup;
     }
 
     public void setTodoItemList(ArrayList<TodoItem> todoItemList) {
         this.todoItemList = todoItemList;
     }
 
-    public String getGroup() {
-        return group;
+    public String get_todoListName() {
+        return todoList;
     }
 
     public ArrayList<TodoItem> getTodoItemList() {

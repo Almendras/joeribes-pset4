@@ -16,9 +16,8 @@ public class EditListActivity extends AppCompatActivity {
     TodoManager dbHandler;
     Context context;
     TodoItem todoItem;
-    String activityName;
     int activity_id;
-    String groupName;
+    String todoListName;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -48,18 +47,16 @@ public class EditListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_list);
 
         context = this;
-        //dbHandler = new TodoManager(this);
         dbHandler = TodoManager.getsInstance(this);
 
         Intent i = getIntent();
-        //activityName = i.getStringExtra("todos");
-        //activity_id = i.getIntExtra("todos_id", 0);
-        groupName = i.getStringExtra("todoList");
+
+        todoListName = i.getStringExtra("todoList");
 
         // Initializing views
         listInput = (EditText) findViewById(R.id.listInput);
 
-        listInput.setText(groupName);
+        listInput.setText(todoListName);
         todoItem = dbHandler.readDescription(activity_id);
     }
 
@@ -73,13 +70,13 @@ public class EditListActivity extends AppCompatActivity {
     public void editButtonClicked(View view){
         // Edit todoItem with an TodoItem name and Description
         String new_listInput = (listInput.getText().toString());
-        dbHandler.updateList(groupName, new_listInput);
+        dbHandler.updateList(todoListName, new_listInput);
 
         Toast.makeText(EditListActivity.this, "The To-Do List has been changed to " + new_listInput , Toast.LENGTH_LONG).show();
 
         // Launching new TodoItem
         Intent intent = new Intent(getBaseContext(), TodoListActivity.class);
-        intent.putExtra("groupName", new_listInput);
+        intent.putExtra("todoListName", new_listInput);
         startActivity(intent);
         finish();
 

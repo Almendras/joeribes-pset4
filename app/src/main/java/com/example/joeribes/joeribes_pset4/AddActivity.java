@@ -16,7 +16,7 @@ public class AddActivity extends AppCompatActivity {
     TodoManager dbHandler;
     Context context;
     TodoItem todoItem;
-    String todoList;
+    String todoListName;
 
     @Override
     public void onBackPressed() {
@@ -60,19 +60,19 @@ public class AddActivity extends AppCompatActivity {
         descriptionInput = (EditText) findViewById(R.id.descriptionInput);
 
         Intent i = getIntent();
-        todoList = i.getStringExtra("todoList");
+        todoListName = i.getStringExtra("todoListName");
 
     }
 
     //Add an todoItem to the database
     public void addButtonClicked(View view){
         // Create todoItem with an TodoItem name and Description
-        todoItem = new TodoItem(activityInput.getText().toString(), descriptionInput.getText().toString(), todoList);
+        todoItem = new TodoItem(activityInput.getText().toString(), descriptionInput.getText().toString(), todoListName);
         dbHandler.create(todoItem);
 
         // // Launching new TodoItem
         Intent intent = new Intent(getBaseContext(), TodoListActivity.class);
-        intent.putExtra("groupName", todoList);
+        intent.putExtra("todoListName", todoListName);
         startActivity(intent);
         finish();
     }

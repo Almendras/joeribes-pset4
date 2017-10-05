@@ -35,9 +35,7 @@ public class CustomAdapter extends ArrayAdapter<TodoItem> {
         dbHandler = TodoManager.getsInstance(customContext);
 
         // Initializing values
-        final String activityItem = getItem(position).get_todoName();
-        final String descriptionItem = getItem(position).get_description();
-        final int idItem = getItem(position).get_id();
+        final String todoItemName = getItem(position).get_todoItemName();
         final int isFinished = getItem(position).get_finished();
         final TodoItem todoItem = getItem(position);
         final TextView myText = (TextView) customView.findViewById(R.id.activityTextView);
@@ -57,16 +55,16 @@ public class CustomAdapter extends ArrayAdapter<TodoItem> {
                 if(isChecked) {
                     todoItem.set_Finished(1);
                     dbHandler.update(todoItem);
-                    Toast.makeText(customContext, "Marked " + activityItem + " as finished", Toast.LENGTH_LONG).show();
+                    Toast.makeText(customContext, "Marked " + todoItemName + " as finished", Toast.LENGTH_LONG).show();
                 } else {
                     todoItem.set_Finished(0);
                     dbHandler.update(todoItem);
-                    Toast.makeText(customContext, "Marked " + activityItem  + " as unfinished", Toast.LENGTH_LONG).show();
+                    Toast.makeText(customContext, "Marked " + todoItemName  + " as unfinished", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
-        myText.setText(activityItem);
+        myText.setText(todoItemName);
         return customView;
     }
 

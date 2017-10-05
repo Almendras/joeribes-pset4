@@ -9,25 +9,25 @@ import java.io.Serializable;
 public class TodoItem implements Serializable{
 
     private int _id;
-    private String todoName;
+    private String todoItemName;
     private String description;
     private int finished;
-    private String groupName;
+    private String todoListName;
 
-    public TodoItem(String aTodoName, String aDescription, String aGroupName) {
-        todoName = aTodoName;
+    public TodoItem(String aTodoItemName, String aDescription, String aTodoListName) {
+        todoItemName = aTodoItemName;
         description = aDescription;
-        groupName = aGroupName;
+        todoListName = aTodoListName;
         finished = 0;
 
     }
 
-    public TodoItem(String productName, String aDescription, int id, int isFinished, String aGroupName) {
-        todoName = productName;
+    public TodoItem(String aTodoItemName, String aDescription, int id, int isFinished, String aGroupName) {
+        todoItemName = aTodoItemName;
         description = aDescription;
         _id = id;
         finished = isFinished;
-        groupName = aGroupName;
+        todoListName = aGroupName;
     }
 
     public void set_id(int _id) {
@@ -35,11 +35,11 @@ public class TodoItem implements Serializable{
     }
 
     public void set_groupID(String aGroupName) {
-        this.groupName = aGroupName;
+        this.todoListName = aGroupName;
     }
 
-    public void set_todoName(String newProductName) {
-        todoName = newProductName;
+    public void set_todoItemName(String newItemName) {
+        todoItemName = newItemName;
     }
 
     public void set_description(String newDescription) {
@@ -50,12 +50,12 @@ public class TodoItem implements Serializable{
         return _id;
     }
 
-    public String get_groupName() {
-        return groupName;
+    public String get_todoListName() {
+        return todoListName;
     }
 
-    public String get_todoName() {
-        return todoName;
+    public String get_todoItemName() {
+        return todoItemName;
     }
 
 

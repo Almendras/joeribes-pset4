@@ -21,7 +21,7 @@ public class TodoManager extends SQLiteOpenHelper {
     private static final String COLUMN_TODO = "todoName";
     private static final String COLUMN_FINISHED = "finished";
     private static final String COLUMN_DESCRIPTION = "todoDescription";
-    private static final String COLUMN_GROUP = "groupName";
+    private static final String COLUMN_GROUP = "todoListName";
 
     // Initializing values for the todoLists
     private static ArrayList<TodoList> todoListsContainer;
@@ -59,7 +59,6 @@ public class TodoManager extends SQLiteOpenHelper {
                 COLUMN_GROUP + " TEXT NOT NULL, " +
                 COLUMN_DESCRIPTION + " TEXT NOT NULL)";
         db.execSQL(query);
-
     }
 
     @Override
@@ -72,27 +71,13 @@ public class TodoManager extends SQLiteOpenHelper {
     public void create(TodoItem todoItem) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_TODO, todoItem.get_todoName());
+        values.put(COLUMN_TODO, todoItem.get_todoItemName());
         values.put(COLUMN_DESCRIPTION, todoItem.get_description());
         values.put(COLUMN_FINISHED, todoItem.get_finished());
-        values.put(COLUMN_GROUP, todoItem.get_groupName());
+        values.put(COLUMN_GROUP, todoItem.get_todoListName());
         db.insert(TABLE_TODO, null, values);
         db.close();
     }
-
-    /*
-    //Add a new row to the database
-    public void createTodoItem(TodoItem todoItem, String todoList) {
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_TODO, todoItem.get_todoName());
-        values.put(COLUMN_DESCRIPTION, todoItem.get_description());
-        values.put(COLUMN_FINISHED, todoItem.get_finished());
-        values.put(COLUMN_GROUP, todoList);
-        db.insert(TABLE_TODO, null, values);
-        db.close();
-    }
-    */
 
     //Delete a todoItem from the database
     public void delete(int todoID) {
@@ -112,45 +97,29 @@ public class TodoManager extends SQLiteOpenHelper {
 
         todoListsContainer = new ArrayList<TodoList>();
 
-        //TodoList todoList = new TodoList();
-
-
-
         String query = "SELECT " + COLUMN_ID + ", " + COLUMN_TODO + ", " + COLUMN_DESCRIPTION + ", " + COLUMN_FINISHED + ", " + COLUMN_GROUP + " FROM " + TABLE_TODO;
         Cursor cursor = db.rawQuery(query, null);
 
         if(cursor.moveToFirst()) {
             do {
-                String todoName = cursor.getString(cursor.getColumnIndex(COLUMN_TODO));
+                String todoItemName = cursor.getString(cursor.getColumnIndex(COLUMN_TODO));
                 String description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION));
                 int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
                 int finished = cursor.getInt(cursor.getColumnIndex(COLUMN_FINISHED));
-                String groupName = cursor.getString(cursor.getColumnIndex(COLUMN_GROUP));
-                TodoItem todoItem = new TodoItem(todoName, description, id, finished, groupName);
+                String todoListName = cursor.getString(cursor.getColumnIndex(COLUMN_GROUP));
+                TodoItem todoItem = new TodoItem(todoItemName, description, id, finished, todoListName);
 
-                TodoList todoList = new TodoList(groupName);
+                TodoList todoList = new TodoList(todoListName);
                 todoList.addtodoItem(todoItem);
 
-                int counter = 0;
-                int count = -1;
-                for(TodoList todoList1 : todoListsContainer) {
-                    if (todoList1.getGroup().equals(groupName)) {
-                        count = counter;
-                    }
-                    counter++;
-
-                }
+                int count = containsTodoList(todoListName, todoListsContainer);
 
                 if (todoListsContainer.isEmpty()) {
-                    //TodoList todoList = new TodoList(groupID);
-                    //todoList.addtodoItem(todoItem);
                     todoListsContainer.add(todoList);
                 } else {
                     if (count >= 0) {
                         todoListsContainer.get(count).addtodoItem(todoItem);
                     } else {
-                        //TodoList todoList = new TodoList(groupID);
-                        //todoList.addtodoItem(todoItem);
                         todoListsContainer.add(todoList);
                     }
                 }
@@ -167,6 +136,21 @@ public class TodoManager extends SQLiteOpenHelper {
 
     }
 
+
+    // Check if todoListsContainer contains a TodoList
+    public int containsTodoList(String groupName, ArrayList<TodoList> todoListsContainer) {
+        int count = -1;
+        int counter = 0;
+
+        for (TodoList todoList1 : todoListsContainer) {
+            if (todoList1.get_todoListName().equals(groupName)) {
+                count = counter;
+            }
+            counter++;
+        }
+        return count;
+    }
+
     // Delete values from the database which match the id
     public TodoItem readDescription(int activity_id){
         SQLiteDatabase db = getReadableDatabase();
@@ -178,12 +162,12 @@ public class TodoManager extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()) {
             do {
-                String todoName = cursor.getString(cursor.getColumnIndex(COLUMN_TODO));
+                String todoItemName = cursor.getString(cursor.getColumnIndex(COLUMN_TODO));
                 String description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION));
                 int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
                 int finished = cursor.getInt(cursor.getColumnIndex(COLUMN_FINISHED));
-                String groupName = cursor.getString(cursor.getColumnIndex(COLUMN_GROUP));
-                todoItem = new TodoItem(todoName, description, id, finished, groupName);
+                String todoListName = cursor.getString(cursor.getColumnIndex(COLUMN_GROUP));
+                todoItem = new TodoItem(todoItemName, description, id, finished, todoListName);
             }
 
             while (cursor.moveToNext());
@@ -197,18 +181,18 @@ public class TodoManager extends SQLiteOpenHelper {
     public int update(TodoItem todoItem) {
         SQLiteDatabase db = getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_TODO, todoItem.get_todoName());
+        values.put(COLUMN_TODO, todoItem.get_todoItemName());
         values.put(COLUMN_DESCRIPTION, todoItem.get_description());
         values.put(COLUMN_FINISHED, todoItem.get_finished());
-        values.put(COLUMN_GROUP, todoItem.get_groupName());
+        values.put(COLUMN_GROUP, todoItem.get_todoListName());
         return db.update(TABLE_TODO, values, COLUMN_ID + " = ? ", new String[] { String.valueOf(todoItem.get_id()) });
     }
 
-    public int updateList(String groupName, String new_groupName) {
+    public int updateList(String todoListName, String new_todoListName) {
         SQLiteDatabase db = getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_GROUP, new_groupName);
-        return db.update(TABLE_TODO, values, COLUMN_GROUP + " = ? ", new String[] { String.valueOf(groupName) });
+        values.put(COLUMN_GROUP, new_todoListName);
+        return db.update(TABLE_TODO, values, COLUMN_GROUP + " = ? ", new String[] { String.valueOf(todoListName) });
     }
 
 

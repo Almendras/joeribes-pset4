@@ -17,7 +17,7 @@ public class EditActivity extends AppCompatActivity {
     Context context;
     TodoItem todoItem;
     String activityName;
-    int activity_id;
+    int todoItem_id;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -52,14 +52,14 @@ public class EditActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         activityName = i.getStringExtra("todos");
-        activity_id = i.getIntExtra("todos_id", 0);
+        todoItem_id = i.getIntExtra("todos_id", 0);
 
         // Initializing views
         activityInput = (EditText) findViewById(R.id.listInput);
         descriptionInput = (EditText) findViewById(R.id.descriptionInput);
 
         activityInput.setText(activityName);
-        todoItem = dbHandler.readDescription(activity_id);
+        todoItem = dbHandler.readDescription(todoItem_id);
         descriptionInput.setText(todoItem.get_description());
     }
 
@@ -72,7 +72,7 @@ public class EditActivity extends AppCompatActivity {
     //Add an todoItem to the database
     public void editButtonClicked(View view){
         // Edit todoItem with an TodoItem name and Description
-        todoItem.set_todoName(activityInput.getText().toString());
+        todoItem.set_todoItemName(activityInput.getText().toString());
         todoItem.set_description(descriptionInput.getText().toString());
 
         dbHandler.update(todoItem);

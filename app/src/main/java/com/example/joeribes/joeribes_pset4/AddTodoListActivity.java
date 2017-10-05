@@ -46,8 +46,6 @@ public class AddTodoListActivity extends AppCompatActivity {
         }
     }
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,11 +64,11 @@ public class AddTodoListActivity extends AppCompatActivity {
 
     //Add an todoItem to the database
     public void addButtonClicked(View view){
-        // Create todoItem with an TodoItem name and Description
+        // Create a To-Do list with an TodoList Name, TodoItem name and Description
         todoItem = new TodoItem(todoInput.getText().toString(), descriptionInput.getText().toString(), todoListInput.getText().toString());
         dbHandler.create(todoItem);
 
-        // // Launching new TodoItem
+        // // Launching Main activity
         Intent intent = new Intent(getBaseContext(), MainActivity.class);
         startActivity(intent);
         finish();

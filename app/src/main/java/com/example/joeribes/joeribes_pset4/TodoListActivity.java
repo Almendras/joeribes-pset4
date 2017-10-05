@@ -3,6 +3,7 @@ package com.example.joeribes.joeribes_pset4;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,15 +21,12 @@ public class TodoListActivity extends AppCompatActivity {
 
     ListView activityListView;
     TodoManager dbHandler;
-    Context context;
-    String groupName;
+    String todoListName;
     ArrayList<TodoList> todoListsContainer;
     ArrayList<TodoItem> todoList;
-    String activity;
-    int activity_id;
-    int activity_finished;
-    int count = -1;
-    int counter = 0;
+    String todoItem;
+    int todoItem_id;
+    int todoFinished;
 
     @Override
     public void onBackPressed() {
@@ -46,13 +44,13 @@ public class TodoListActivity extends AppCompatActivity {
                 return true;
             case R.id.action_edit:
                 Intent intent4 = new Intent(getBaseContext(), EditListActivity.class);
-                intent4.putExtra("todoList", groupName);
+                intent4.putExtra("todoListName", todoListName);
                 startActivity(intent4);
                 finish();
                 return true;
             case R.id.action_add:
                 Intent intent3 = new Intent(getBaseContext(), AddActivity.class);
-                intent3.putExtra("todoList", groupName);
+                intent3.putExtra("todoListName", todoListName);
                 startActivity(intent3);
                 finish();
 
@@ -72,7 +70,7 @@ public class TodoListActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.list, menu);
-        setTitle(groupName);
+        setTitle(todoListName);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -81,28 +79,34 @@ public class TodoListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_list);
 
-        context = this;
+        Intent i = getIntent();
+        todoListName = i.getStringExtra("todoListName");
 
         dbHandler = TodoManager.getsInstance(this);
 
-        Intent i = getIntent();
-        groupName = i.getStringExtra("groupName");
-
         todoListsContainer = dbHandler.read();
 
-        for(TodoList todoList1 : todoListsContainer) {
-            if (todoList1.getGroup().equals(groupName)) {
+        int count = containsTodoList(todoListName, todoListsContainer);
+
+        todoList = todoListsContainer.get(count).getTodoItemList();
+
+        showAdapter();
+
+    }
+
+    // Check if todoListsContainer contains a TodoList
+    public int containsTodoList(String groupName, ArrayList<TodoList> todoListsContainer) {
+        int count = -1;
+        int counter = 0;
+
+        for (TodoList todoList1 : todoListsContainer) {
+            if (todoList1.get_todoListName().equals(groupName)) {
                 count = counter;
             }
             counter++;
-
         }
-
-        todoList = todoListsContainer.get(count).getTodoItemList();
-        showAdapter();
+        return count;
     }
-
-
 
 
     // Show the listView adapter
@@ -119,16 +123,16 @@ public class TodoListActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                         // Receive the todoItem and id
-                        activity = todoList.get(position).get_todoName();
-                        activity_id = todoList.get(position).get_id();
-                        activity_finished = todoList.get(position).get_finished();
+                        todoItem = todoList.get(position).get_todoItemName();
+                        todoItem_id = todoList.get(position).get_id();
+                        todoFinished = todoList.get(position).get_finished();
 
                         // Launching new TodoItem
                         Intent i = new Intent(getApplicationContext(), DescriptionActivity.class);
-                        i.putExtra("todo", activity);
-                        i.putExtra("todo_id", activity_id);
-                        i.putExtra("activity_finished", activity_finished);
-                        i.putExtra("groupName", groupName);
+                        i.putExtra("todoItem", todoItem);
+                        i.putExtra("todoItem_id", todoItem_id);
+                        i.putExtra("todoFinished", todoFinished);
+                        i.putExtra("todoListName", todoListName);
                         startActivity(i);
                     }
                 }
@@ -140,14 +144,14 @@ public class TodoListActivity extends AppCompatActivity {
     public void deleteDialog() {
         AlertDialog.Builder alert = new AlertDialog.Builder(TodoListActivity.this);
         alert.setTitle("Delete todo List");
-        alert.setMessage("Are you sure you want to delete the todo List " + groupName + "?");
+        alert.setMessage("Are you sure you want to delete the todo List " + todoListName + "?");
         alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //Delete item
-                dbHandler.deleteList(groupName);
-                Toast.makeText(TodoListActivity.this, "Deleted todo List " + groupName , Toast.LENGTH_LONG).show();
+                dbHandler.deleteList(todoListName);
+                Toast.makeText(TodoListActivity.this, "Deleted todo List " + todoListName , Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(intent);
@@ -164,7 +168,4 @@ public class TodoListActivity extends AppCompatActivity {
 
         alert.show();
     }
-
-
-
 }

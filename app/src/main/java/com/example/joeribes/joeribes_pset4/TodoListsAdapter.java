@@ -31,7 +31,7 @@ public class TodoListsAdapter extends ArrayAdapter<TodoList> {
 
         View customView = convertView;
         if(customView == null){
-            customView = myInflater.inflate(R.layout.custom_row, parent, false);
+            customView = myInflater.inflate(R.layout.custom_row_lists, parent, false);
         }
 
         //dbHandler = new TodoManager(customContext);
@@ -42,7 +42,7 @@ public class TodoListsAdapter extends ArrayAdapter<TodoList> {
 
         final TextView myText = (TextView) customView.findViewById(R.id.activityTextView);
 
-        myText.setText(list.getGroup());
+        myText.setText(list.get_todoListName());
         return customView;
     }
 
