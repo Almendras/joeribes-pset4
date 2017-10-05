@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.joeribes.joeribes_pset4.EditActivity">
+    tools:context="com.example.joeribes.joeribes_pset4.EditListActivity">
 
     <EditText
         android:id="@+id/listInput"
-        android:layout_width="500dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/activityView"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
         android:ems="10"
         android:hint="To-Do item"
         android:inputType="textPersonName"
@@ -22,26 +23,12 @@
         android:id="@+id/editButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="editButtonClicked"
-        android:text="Edit your todo Item "
-        tools:layout_editor_absoluteX="126dp"
-        tools:layout_editor_absoluteY="307dp"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:onClick="editButtonClicked"
+        android:text="Edit your list name"
+        tools:layout_editor_absoluteX="126dp"
+        tools:layout_editor_absoluteY="307dp" />
 
-
-    <EditText
-        android:id="@+id/descriptionInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/listInput"
-        android:layout_alignStart="@+id/listInput"
-        android:layout_below="@+id/listInput"
-        android:gravity="top|left"
-        android:hint="Description"
-        android:lines="8"
-        android:maxLines="6"
-        android:minLines="1"
-        android:scrollbars="vertical" />
 
 </RelativeLayout>

@@ -18,10 +18,12 @@ public class DescriptionActivity extends AppCompatActivity {
     TextView descriptionView;
     String activity;
     int activity_id;
+    String groupName;
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, TodoListActivity.class);
+        intent.putExtra("groupName", groupName);
         startActivity(intent);
         finish();
     }
@@ -67,9 +69,10 @@ public class DescriptionActivity extends AppCompatActivity {
         Intent i = getIntent();
         activity = i.getStringExtra("todo");
         activity_id = i.getIntExtra("todo_id", 0);
+        groupName = i.getStringExtra("groupName");
 
         // Set the todoItem name and description in the textViews
-        activityView.setText(activity);
+        //activityView.setText(activity);
         description = dbHandler.readDescription(activity_id);
         descriptionView.setText(description.get_description());
 
@@ -78,6 +81,7 @@ public class DescriptionActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.description, menu);
+        setTitle(activity);
         return super.onCreateOptionsMenu(menu);
     }
 

@@ -7,25 +7,12 @@
     tools:context="com.example.joeribes.joeribes_pset4.DescriptionActivity">
 
     <TextView
-        android:id="@+id/activityView"
-        android:layout_width="500dp"
-        android:layout_height="100dp"
-        android:gravity="center"
-        android:text="Boodschappen"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
         android:id="@+id/descriptionView"
         android:layout_width="500dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/activityView"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/activityView"
+        android:layout_margin="16dp" />
 
 </RelativeLayout>

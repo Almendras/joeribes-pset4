@@ -10,14 +10,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class EditActivity extends AppCompatActivity {
-    EditText activityInput;
-    EditText descriptionInput;
+public class EditListActivity extends AppCompatActivity {
+
+    EditText listInput;
     TodoManager dbHandler;
     Context context;
     TodoItem todoItem;
     String activityName;
     int activity_id;
+    String groupName;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -44,23 +45,22 @@ public class EditActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit);
+        setContentView(R.layout.activity_edit_list);
 
         context = this;
         //dbHandler = new TodoManager(this);
         dbHandler = TodoManager.getsInstance(this);
 
         Intent i = getIntent();
-        activityName = i.getStringExtra("todos");
-        activity_id = i.getIntExtra("todos_id", 0);
+        //activityName = i.getStringExtra("todos");
+        //activity_id = i.getIntExtra("todos_id", 0);
+        groupName = i.getStringExtra("todoList");
 
         // Initializing views
-        activityInput = (EditText) findViewById(R.id.listInput);
-        descriptionInput = (EditText) findViewById(R.id.descriptionInput);
+        listInput = (EditText) findViewById(R.id.listInput);
 
-        activityInput.setText(activityName);
+        listInput.setText(groupName);
         todoItem = dbHandler.readDescription(activity_id);
-        descriptionInput.setText(todoItem.get_description());
     }
 
     @Override
@@ -72,20 +72,16 @@ public class EditActivity extends AppCompatActivity {
     //Add an todoItem to the database
     public void editButtonClicked(View view){
         // Edit todoItem with an TodoItem name and Description
-        todoItem.set_todoName(activityInput.getText().toString());
-        todoItem.set_description(descriptionInput.getText().toString());
+        String new_listInput = (listInput.getText().toString());
+        dbHandler.updateList(groupName, new_listInput);
 
-        dbHandler.update(todoItem);
-
-        Toast.makeText(EditActivity.this, "The todoItem has been changed" , Toast.LENGTH_LONG).show();
+        Toast.makeText(EditListActivity.this, "The To-Do List has been changed to " + new_listInput , Toast.LENGTH_LONG).show();
 
         // Launching new TodoItem
-        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+        Intent intent = new Intent(getBaseContext(), TodoListActivity.class);
+        intent.putExtra("groupName", new_listInput);
         startActivity(intent);
         finish();
 
     }
-
-
-
 }

@@ -30,6 +30,13 @@ public class TodoListActivity extends AppCompatActivity {
     int count = -1;
     int counter = 0;
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -37,7 +44,12 @@ public class TodoListActivity extends AppCompatActivity {
             case R.id.action_delete:
                 deleteDialog();
                 return true;
-
+            case R.id.action_edit:
+                Intent intent4 = new Intent(getBaseContext(), EditListActivity.class);
+                intent4.putExtra("todoList", groupName);
+                startActivity(intent4);
+                finish();
+                return true;
             case R.id.action_add:
                 Intent intent3 = new Intent(getBaseContext(), AddActivity.class);
                 intent3.putExtra("todoList", groupName);
@@ -60,6 +72,7 @@ public class TodoListActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.list, menu);
+        setTitle(groupName);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -115,6 +128,7 @@ public class TodoListActivity extends AppCompatActivity {
                         i.putExtra("todo", activity);
                         i.putExtra("todo_id", activity_id);
                         i.putExtra("activity_finished", activity_finished);
+                        i.putExtra("groupName", groupName);
                         startActivity(i);
                     }
                 }
