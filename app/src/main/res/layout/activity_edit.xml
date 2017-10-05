@@ -20,7 +20,7 @@
         tools:layout_editor_absoluteY="16dp" />
 
     <EditText
-        android:id="@+id/activityInput"
+        android:id="@+id/todoInput"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -49,9 +49,9 @@
         android:id="@+id/descriptionInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/activityInput"
-        android:layout_alignStart="@+id/activityInput"
-        android:layout_below="@+id/activityInput"
+        android:layout_alignEnd="@+id/todoInput"
+        android:layout_alignStart="@+id/todoInput"
+        android:layout_below="@+id/todoInput"
         android:layout_marginTop="22dp"
         android:gravity="top|left"
         android:hint="Description"

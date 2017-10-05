@@ -55,7 +55,7 @@ public class EditActivity extends AppCompatActivity {
         activity_id = i.getIntExtra("todos_id", 0);
 
         // Initializing views
-        activityInput = (EditText) findViewById(R.id.activityInput);
+        activityInput = (EditText) findViewById(R.id.todoInput);
         descriptionInput = (EditText) findViewById(R.id.descriptionInput);
 
         activityInput.setText(activityName);;

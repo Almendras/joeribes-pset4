@@ -37,39 +37,12 @@ public class TodoListsAdapter extends ArrayAdapter<TodoList> {
         //dbHandler = new TodoManager(customContext);
         dbHandler = TodoManager.getsInstance(customContext);
 
-        // Initializing values
-        final String activityItem = getItem(position).get_todoName();
-        final String descriptionItem = getItem(position).get_description();
-        final int idItem = getItem(position).get_id();
-        final int isFinished = getItem(position).get_finished();
-        final TodoItem todoItem = getItem(position);
+        TodoList list = getItem(position);
+
+
         final TextView myText = (TextView) customView.findViewById(R.id.activityTextView);
-        final CheckBox activityCheckBox = (CheckBox) customView.findViewById(R.id.activityCheckBox);
 
-        // Check the checkbox if the todoItem is finished
-        if(isFinished == 1) {
-            activityCheckBox.setChecked(true);
-        }
-
-        // Create a listener for the checkboxes
-        activityCheckBox.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                final boolean isChecked = activityCheckBox.isChecked();
-                if(isChecked) {
-                    todoItem.set_Finished(1);
-                    dbHandler.update(todoItem);
-                    Toast.makeText(customContext, "Marked " + activityItem + " as finished", Toast.LENGTH_LONG).show();
-                } else {
-                    todoItem.set_Finished(0);
-                    dbHandler.update(todoItem);
-                    Toast.makeText(customContext, "Marked " + activityItem  + " as unfinished", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        myText.setText(activityItem);
+        myText.setText(list.getGroup());
         return customView;
     }
 

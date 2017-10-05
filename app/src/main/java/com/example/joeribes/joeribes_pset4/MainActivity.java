@@ -31,13 +31,14 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<TodoList> todoListsContainer;
     ArrayList<TodoItem> todoList;
     Context context;
+    String groupName;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                Intent intent = new Intent(getBaseContext(), AddActivity.class);
-                startActivity(intent);
+                Intent intent1 = new Intent(getBaseContext(), AddTodoListActivity.class);
+                startActivity(intent1);
                 finish();
                 return true;
             default:
@@ -68,15 +69,26 @@ public class MainActivity extends AppCompatActivity {
 
     //Print the database
     public void printDatabase(){
+        /*
+        String test = "Joeri";
+        TodoItem todoItem = new TodoItem(test, test, test);
+        dbHandler.create(todoItem, "Joeri");
+        */
+        /*
+        String test = "monkey";
+        TodoItem todoItem = new TodoItem(test, test, test);
+        dbHandler.create(todoItem);
+        */
+
         todoListsContainer = dbHandler.read();
-        todoList = todoListsContainer.get(1).getTodoItemList();
+        //todoList = todoListsContainer.get(0).getTodoItemList();
 
         showAdapter();
     }
 
     // Show the listView adapter
     public void showAdapter() {
-        ListAdapter myAdapter = new CustomAdapter(this, todoList);
+        ListAdapter myAdapter = new TodoListsAdapter(this, todoListsContainer);
         activityListView = (ListView) findViewById(R.id.activityListView);
         assert activityListView != null;
 
@@ -88,15 +100,16 @@ public class MainActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                         // Receive the todoItem and id
-                        activity = todoList.get(position).get_todoName();
-                        activity_id = todoList.get(position).get_id();
-                        activity_finished = todoList.get(position).get_finished();
+                        //activity = todoList.get(position).get_todoName();
+                        //activity_id = todoList.get(position).get_id();
+                        //activity_finished = todoList.get(position).get_finished();
+                        groupName = todoListsContainer.get(position).getGroup();
+
+
 
                         // Launching new TodoItem
-                        Intent i = new Intent(getApplicationContext(), DescriptionActivity.class);
-                        i.putExtra("todo", activity);
-                        i.putExtra("todo_id", activity_id);
-                        i.putExtra("activity_finished", activity_finished);
+                        Intent i = new Intent(getApplicationContext(), TodoListActivity.class);
+                        i.putExtra("groupName", groupName);
                         startActivity(i);
                     }
                 }

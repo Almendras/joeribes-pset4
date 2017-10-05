@@ -12,30 +12,30 @@ public class TodoItem implements Serializable{
     private String todoName;
     private String description;
     private int finished;
-    private int groupid;
+    private String groupName;
 
-    public TodoItem(String aTodoName, String aDescription, int groupID) {
+    public TodoItem(String aTodoName, String aDescription, String aGroupName) {
         todoName = aTodoName;
         description = aDescription;
-        groupid = groupID;
+        groupName = aGroupName;
         finished = 0;
 
     }
 
-    public TodoItem(String productName, String aDescription, int id, int isFinished, int groupID) {
+    public TodoItem(String productName, String aDescription, int id, int isFinished, String aGroupName) {
         todoName = productName;
         description = aDescription;
         _id = id;
         finished = isFinished;
-        groupid = groupID;
+        groupName = aGroupName;
     }
 
     public void set_id(int _id) {
         this._id = _id;
     }
 
-    public void set_groupID(int _groupID) {
-        this.groupid = _groupID;
+    public void set_groupID(String aGroupName) {
+        this.groupName = aGroupName;
     }
 
     public void set_todoName(String newProductName) {
@@ -50,8 +50,8 @@ public class TodoItem implements Serializable{
         return _id;
     }
 
-    public int get_groupID() {
-        return groupid;
+    public String get_groupName() {
+        return groupName;
     }
 
     public String get_todoName() {

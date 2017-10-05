@@ -8,15 +8,15 @@ import java.util.ArrayList;
 
 public class TodoList {
 
-    private int group;
+    private String group;
     private ArrayList<TodoItem> todoItemList;
 
-    public TodoList(int aGroup) {
+    public TodoList(String aGroup) {
         this.group = aGroup;
         this.todoItemList = new ArrayList<>();
     }
 
-    public void setGroup(int aGroup) {
+    public void setGroup(String aGroup) {
         this.group = aGroup;
     }
 
@@ -24,7 +24,7 @@ public class TodoList {
         this.todoItemList = todoItemList;
     }
 
-    public int getGroup() {
+    public String getGroup() {
         return group;
     }
 

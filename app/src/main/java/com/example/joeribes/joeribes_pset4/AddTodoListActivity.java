@@ -7,14 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-public class AddActivity extends AppCompatActivity {
+public class AddTodoListActivity extends AppCompatActivity {
 
-    EditText activityInput;
+    EditText todoInput;
     EditText descriptionInput;
+    EditText todoListInput;
     TodoManager dbHandler;
     Context context;
     TodoItem todoItem;
-    String todoList;
 
     @Override
     public void onBackPressed() {
@@ -26,34 +26,28 @@ public class AddActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
+        setContentView(R.layout.activity_add_todo_list);
 
         context = this;
         //dbHandler = new TodoManager(this);
         dbHandler = TodoManager.getsInstance(context);
 
         // Initializing views
-        activityInput = (EditText) findViewById(R.id.todoInput);
+        todoListInput = (EditText) findViewById(R.id.todoListInput);
+        todoInput = (EditText) findViewById(R.id.todoInput);
         descriptionInput = (EditText) findViewById(R.id.descriptionInput);
-
-        Intent i = getIntent();
-        todoList = i.getStringExtra("todoList");
 
     }
 
     //Add an todoItem to the database
     public void addButtonClicked(View view){
         // Create todoItem with an TodoItem name and Description
-        todoItem = new TodoItem(activityInput.getText().toString(), descriptionInput.getText().toString(), todoList);
+        todoItem = new TodoItem(todoInput.getText().toString(), descriptionInput.getText().toString(), todoListInput.getText().toString());
         dbHandler.create(todoItem);
 
         // // Launching new TodoItem
-        Intent intent = new Intent(getBaseContext(), TodoListActivity.class);
-        intent.putExtra("groupName", todoList);
+        Intent intent = new Intent(getBaseContext(), MainActivity.class);
         startActivity(intent);
         finish();
     }
-
-
-
 }

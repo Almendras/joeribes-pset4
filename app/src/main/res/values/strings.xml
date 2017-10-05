@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">To-do List</string>
+    <string name="app_name">Many To-Do Lists</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
