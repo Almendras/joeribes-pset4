@@ -209,11 +209,6 @@ public class TodoManager extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_GROUP, new_groupName);
         return db.update(TABLE_TODO, values, COLUMN_GROUP + " = ? ", new String[] { String.valueOf(groupName) });
-
-
-
-
-
     }
 
 
